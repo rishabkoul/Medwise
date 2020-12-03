@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style type="text/css">
+
+	@media (max-width: 768px) { 
+		.right-column{
+			margin-left: 0px;
+		}
+	}
+
+	@media (min-width: 768px) { 
+		.right-column{
+			margin-left: 20px;
+		}
+	}
+
+	.create-post-bar{
+		background-color: #fff;
+		margin-bottom:20px;
+	}
+
+	.left-column{
+		padding:0px;
+	}
+
+	.right-column{
+		padding:0px;
+	}
+	.blog-posts{
+		max-width: 500px;
+		width: 100%;
+		margin: auto;
+	}
+    .pl-0{
+        padding-left: 0;
+    }
+</style>
+
+<div class="container">
+<div class="row">
+
+<div class="left-column col-lg-7 col-sm-12 offset-lg-1">
+
+<div class="blog-posts">
+<h3 class="mb-3 font-weight-normal text-center">Unadviced Queries</h3>
+{% if queries %}
+<ul class="pl-0">
+	{% for query in queries %}
+		<a href="{% url 'query:detail' query.slug %}" style="text-decoration: none;"><li class="list-group-item" >{{query.patient.username}} : {{query}}</li></a>
+	{% endfor %}
+</ul>
+{% else %}
+<p>No Advised queries Found</p>
+{% endif %}
+</div>
+{% include 'snippets/query_pagination.html' with queries=queries %}
+</div>
+
+</div>
+
+</div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style type="text/css">
+
+	.create-post-bar{
+		margin-bottom:20px;
+	}
+	.blog-posts{
+		width: 100%;
+		margin: auto;
+	}
+	.pl-0{
+        padding-left: 0;
+    }
+</style>
+
+<div class="container">
+<div class="row">
+
+<div class="col-lg-12">
+	{% if request.user.atype == 'Patient' %}
+
+<div class="create-post-bar text-center">
+<p>Click on the button below to Enter your Query</p>
+<a class="btn btn-outline-primary" href="{% url 'query:create' %}">Enter Query</a>
+</div>
+
+{% endif %}
+
+<div class="blog-posts">
+	{% if request.user.atype == 'Patient' %}
+<h3 class="mb-3 font-weight-normal text-center">Your Existing Queries</h3>
+{% else %}
+<h3 class="mb-3 font-weight-normal text-center">Queries</h3>
+{% endif %}
+{% if queries %}
+{% csrf_token %}
+{% if request.user.atype != 'Doctor' %}
+<button type="submit" id="delete_btn" class="btn btn-danger mb-4">Delete</button>
+{% endif %}
+<ul class="pl-0">
+	{% for query in queries %}
+	
+		{% if request.user.atype == 'Patient' %}
+		<li class="list-group-item" id="{{query.pk}}" ><input type="checkbox" class="mr-4" name="query_id[]" value="{{query.pk}}" id='delete_query'><a href="{% url 'query:detail' query.slug %}" style="text-decoration: none;">{{query}}</a><a style="float: right;" href="{% url 'query:edit' query.slug %}">Edit</a></li>
+		{% else %}
+		<a href="{% url 'query:detail' query.slug %}" style="text-decoration: none;"><li class="list-group-item" >{{query.patient.username}} : {{query}}</li></a>
+		{% endif %}
+	
+	{% endfor %}
+</ul>
+{% else %}
+<center><p>No queries Found</p></center>
+{% endif %}
+</div>
+{% include 'snippets/query_pagination.html' with queries=queries %}
+</div>
+
+</div>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+<script>
+	$(document).ready(function(){
+		$('#delete_btn').click(function(){
+			if(confirm("Are you sure to delete this items ?")){
+				var id=[];
+				var csrf=$('input[name=csrfmiddlewaretoken]').val()
+				$(':checkbox:checked').each(function(i){
+					id[i]=$(this).val();
+				})
+				if(id.length ===0){
+					alert("Please select items to delete ?");
+				}else{
+					$.ajax({
+						url:"/query/delete/",
+						method:"POST",
+						data:{
+							id,
+							csrfmiddlewaretoken:csrf
+						},
+					success:function(response){
+						for(var i=0; i<id.length;i++){
+							$('li#'+id[i]+'').fadeOut('slow');
+						}
+					}
+				})
+			}
+		}})});
+</script>
+
+{% endblock script %}

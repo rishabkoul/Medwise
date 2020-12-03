@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    .card{
+       max-width: 700px; 
+    }
+    .container{
+        padding: 20px;
+    }
+</style>
+
+<div class="container">
+<div class="row">
+<div class="card m-auto">
+<div class="card-body mt-2 mb-2">
+<h2 class="card-title">{{viewprofile.user.username}}</h2>
+{% if viewprofile.user.atype != 'Doctor' %}
+<p class="card-text">Email - {{viewprofile.user.email}}</p>
+{% endif %}
+{% if viewprofile.phone %}
+<p class="card-text">Phone no - {{viewprofile.phone}}</p>
+{% endif %}
+{% if viewprofile.qualification %}
+<p class="card-text">Qualification - {{viewprofile.qualification}}</p>
+{% endif %}
+{% if viewprofile.year_of_ex %}
+<p class="card-text">Years of Experience - {{viewprofile.year_of_ex}}</p>
+{% endif %}
+{% if viewprofile.user == request.user %}
+<a href="{% url 'userprofile:edit' %}" class="btn btn-primary">Update</a>
+{% endif %}
+</div>
+<div class="card-footer text-muted">
+Updated on {{viewprofile.date_updated}} by {{viewprofile.user.username}}
+</div>
+</div>
+</div>
+</div>
+
+{% endblock body %}

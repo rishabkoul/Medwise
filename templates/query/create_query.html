@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<style type="text/css">
+    .create-form {
+          width: 100%;
+          max-width: 100%;
+          padding: 15px;
+          margin: auto;
+        }
+  
+        .submit-button{
+            max-width: 200px;
+        }
+  </style>
+  
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-7 offset-lg-1">
+              <form class="create-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+  
+                  <div class="form-group">
+                    <label for="id_heading">Heading</label>
+                    <input class="form-control" type="text" name="heading" id="id_heading" placeholder="Heading" required autofocus>
+                </div>
+  
+                  <!-- Body -->
+                  <div class="form-group">
+                      <label for="id_body">Content</label>
+                      <textarea class="form-control" rows="10" type="text" name="body" id="id_body" placeholder="Write your query here..." required></textarea>
+                  </div>
+                  {% for field in form %}
+                <p>
+            {% for error in field.errors %}
+            <p style="color: red;">{{field.name}} : {{error}}</p>
+            {% endfor %}
+                </p>
+                {% endfor %}
+                <p>
+                    Upload limit 2 mb for each file
+                </p>
+                  <!-- Image -->
+                  <div class="form-group">
+                      <label for="id_image">Upload Report 1 if Any (pdf/image)</label>
+                      <input  type="file" name="image" id="id_image" accept="image/jpeg,image/png,application/pdf">
+                  </div>
+                  <a class="btn btn-primary mb-4" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Upload More Reports</a>
+
+                  <div class="collapse multi-collapse" id="multiCollapseExample1">
+                  <div class="form-group">
+                    <label for="id_image2">Upload Report 2 if Any (pdf/image)</label>
+                    <input  type="file" name="image2" id="id_image2" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image3">Upload Report 3 if Any (pdf/image)</label>
+                    <input  type="file" name="image3" id="id_image3" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image4">Upload Report 4 if Any (pdf/image)</label>
+                    <input  type="file" name="image4" id="id_image4" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image5">Upload Report 5 if Any (pdf/image)</label>
+                    <input  type="file" name="image5" id="id_image5" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image6">Upload Report 6 if Any (pdf/image)</label>
+                    <input  type="file" name="image6" id="id_image6" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image7">Upload Report 7 if Any (pdf/image)</label>
+                    <input  type="file" name="image7" id="id_image7" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image8">Upload Report 8 if Any (pdf/image)</label>
+                    <input  type="file" name="image8" id="id_image8" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image9">Upload Report 9 if Any (pdf/image)</label>
+                    <input  type="file" name="image9" id="id_image9" accept="image/jpeg,image/png,application/pdf">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image10">Upload Report 10 if Any (pdf/image)</label>
+                    <input  type="file" name="image10" id="id_image10" accept="image/jpeg,image/png,application/pdf">
+                </div>
+            </div>
+
+  
+                  <!-- Submit btn -->
+                  <button class="submit-button btn btn-lg btn-primary btn-block" type="submit">POST</button>
+              </form>	
+          </div>
+      </div>
+  </div>
+
+{% endblock body %}

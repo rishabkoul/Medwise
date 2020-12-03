@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<style type="text/css">
+   .create-form {
+	    width: 100%;
+	    max-width: 100%;
+	    padding: 15px;
+	    margin: auto;
+  	}
+
+  	.submit-button{
+  		max-width: 200px;
+  	}
+
+	.image {
+	  opacity: 1;
+	  transition: .5s ease;
+	  backface-visibility: hidden;
+	}
+
+	.middle {
+	  transition: .5s ease;
+	  opacity: 0;
+	  position: absolute;
+	  text-align: center;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	
+	}
+	.image-group{
+		position: relative;
+  		text-align: center;
+  		cursor:pointer;
+	}
+
+	.image-group:hover .image {
+	  opacity: 0.3;
+	}
+
+	.image-group:hover .middle {
+	  opacity: 1;
+	}
+
+	.text {
+	  margin: auto;
+	  background-color: #4CAF50;
+	  color: white;
+	  font-size: 15px;
+	  padding: 15px;
+	}
+</style>
+
+<div class="container">
+	
+		<ul class="nav nav-pills">
+		  <li class="nav-item">
+			<a class="nav-link" href="{% url 'account' %}">Account</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link active" href="{% url 'userprofile:edit' %}">Profile</a>
+		  </li>
+		</ul>
+		
+	<div class="row">
+		<div class="col-lg-7 offset-lg-1">
+
+			{% if success_message %}
+				<h3 style="color:green; text-align: center;">{{success_message}}</h3>
+			{% endif %}
+
+			<form class="create-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+				{% if request.user.atype == 'Patient' %}
+				<div class="form-group">
+					<label for="id_phone">Phone no</label>
+					<input class="form-control" type="number" name="phone" id="id_phone" placeholder="Your Phone here" value="{{form.initial.phone}}" autofocus>
+				</div>
+                {% else %}
+				
+				<div class="form-group">
+					<label for="id_qualification">Qualification</label>
+					<input class="form-control" type="text" name="qualification" id="id_qualification" placeholder="Your Qualification here" value="{{form.initial.qualification}}" autofocus>
+				</div>
+                
+	
+				<div class="form-group">
+					<label for="id_year_of_ex">Years of Experience</label>
+					<input class="form-control" type="number" name="year_of_ex" id="id_year_of_ex" placeholder="Your Years of Experience here" value="{{form.initial.year_of_ex}}">
+				</div>
+				{% endif %}
+
+				{% for field in form %}
+					<p>
+						{% for error in field.errors %}
+							<p style="color: red">{{ error }}</p>
+						{% endfor %}
+					</p>
+				{% endfor %}
+				{% if form.non_field_errors %}
+					<div style="color: red">
+						<p>{{form.non_field_errors}}</p>
+					</div>
+				{% endif %}
+
+				<!-- Submit btn -->
+				<button class="submit-button btn btn-lg btn-primary btn-block" type="submit">Update</button>
+			</form>	
+		</div>
+	</div>
+</div>
+
+{% endblock body %}

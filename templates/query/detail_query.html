@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    .card{
+       max-width: 700px; 
+    }
+    .container{
+        padding: 20px;
+    }
+    .create-form {
+          width: 100%;
+          max-width: 100%;
+          padding: 15px;
+          margin: auto;
+        }
+  
+        .submit-button{
+            max-width: 200px;
+        }
+        .pl-0{
+        padding-left: 0;
+    }
+    .mb-0{
+        margin-bottom: 0;
+    }
+    .comment-height{
+        height: 30vh;
+    }
+</style>
+
+<div class="container">
+<div class="row">
+<div class="card m-auto">
+   
+<div class="card-body mt-2 mb-2">
+    {% if query.image %}
+    <p>Report Link 1 - <a href="{{query.image.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image2 %}
+    <p>Report Link 2 - <a href="{{query.image2.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image3 %}
+    <p>Report Link 3 - <a href="{{query.image3.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image4 %}
+    <p>Report Link 4 - <a href="{{query.image4.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image5 %}
+    <p>Report Link 5 - <a href="{{query.image5.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image6 %}
+    <p>Report Link 6 - <a href="{{query.image6.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image7 %}
+    <p>Report Link 7 - <a href="{{query.image7.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image8 %}
+    <p>Report Link 8 - <a href="{{query.image8.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image9 %}
+    <p>Report Link 9 - <a href="{{query.image9.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+    {% if query.image10 %}
+    <p>Report Link 10 - <a href="{{query.image10.url}}" target="_blank">Click Here</a></p>
+    {% endif %}
+<h2 class="card-title">{{query.heading}}</h2>
+<p class="card-text">{{query.body}}</p>
+{% if query.patient == request.user %}
+<a href="{% url 'query:edit' query.slug %}" class="btn btn-primary">Edit</a>
+{% endif %}
+</div>
+<div class="card-footer text-muted">
+Updated on {{query.date_updated}} by {{query.patient.email}} Phone: {{seeing_profile.phone}}
+</div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 comment-height">
+    <h3 class="mb-3 font-weight-normal text-center">Comments:</h3>
+    {% if queries %}
+    <ul class="pl-0 overflow-auto" style="height: 100%;">
+        {% for comment in queries %}
+            <li class="list-group-item {% if comment.written_by == request.user %}text-right{% endif %}" >
+                <p class="mb-0"><a href="{% url 'userprofile:detail' comment.slug %}">{{comment.written_by.username}}</a> : {{comment.text}} {% if comment.written_by == request.user %}<a href="{% url 'comments:delete' comment.pk %}">Delete</a>{% endif %}</p>
+                <p class="text-muted small mb-0">{{comment.date_published}}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No comments yet</p>
+    {% endif %}
+    {% if queries.paginator.num_pages != 1 %}
+    {% include 'snippets/comment_pagination.html' with queries=queries %}
+    {% endif %}
+</div>
+</div>
+
+<div class="row" style="margin-top: 10vh;">
+    <div class="col-lg-12">
+        <form class="create-form" method="post" action="/comments/create/{{query.slug}}" enctype="multipart/form-data">{% csrf_token %}
+
+            <div class="row">
+            <div class="col-lg-10">
+                <div class="form-group">
+                    <textarea class="form-control" name="text" id="id_text" cols="30" rows="2" required autofocus placeholder="Comment here"></textarea>
+                </div>
+            </div>
+            
+            <div class="col-lg-2">
+                <!-- Submit btn -->
+            <button class="submit-button btn btn-lg btn-primary btn-block" type="submit">Comment</button>
+            </div>
+        </div>
+            
+        </form>	
+    </div>
+</div>
+
+</div>
+
+{% endblock body %}

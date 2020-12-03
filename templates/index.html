@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<style>
+    hr.style-eight {
+    overflow: visible; /* For IE */
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+}
+hr.style-eight:after {
+    content: "§";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
+    background: #f2f2f2;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+@media only screen and (min-width: 768px) {
+    .mt-50{
+        margin-top: 20%;
+    }
+}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 text-center">
+            <h1 style="font-size: 2.75rem; font-weight: 600; color: rgb(6, 6, 95);" class="mt-50">Welcome to Medwise</h1>
+            <h4 style="color: rgb(6, 6, 95);">Giving back to our community</h4>
+            <hr class="style-eight" style="margin-top: 2rem;">
+            <h1 style="font-size: 2rem; font-weight: 500;color: rgb(6, 6, 95);" class="mt-4">Our Vision</h1>
+            <h4 style="font-weight: 360;">To have a Society where Patients are not subjected to unnecessary medical procedures to extract money from them.</h4>
+            <h1 style="font-size: 2rem; font-weight: 500;color: rgb(6, 6, 95);" class="mt-4">Our Mission</h1>
+            <h4 style="font-weight: 360;">We are a group of Volunteer Doctors and Technocrats who provide and facilitate 2nd opinion to patients/ caretakers, online and free.</h4>
+        </div>
+        <div class="col-lg-6 text-center">
+            <img src="{% static 'proud-doctor-with-stethoscope.jpg' %}" alt="">
+        </div>
+    </div>
+    <p style="font-weight: bolder;"> <u>Disclaimer</u> </p>
+    <p>The doctors here provide you with the best advise based on your (Patient/Attendent) description of the problem, the reports uploaded and current practices of medicine available. The advice seeker is free to seek another opinion outside this forum and this forum or the volunteering doctors can not be held accountable for outcome of the advise provided herein or through this forum. 
+        This service is done with the best intentions of the community in mind and is provided free. Our Volunteer doctors try their best to reply to queries on time, however do to their busy schedule you may face delay at times.
+        </p>
+
+</div>
+{% endblock body %}
